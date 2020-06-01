@@ -56,6 +56,18 @@ void PrintWorld(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
     printf("\n---------------------------------------------\n");
 }
 
+void CopyWorld(
+        struct point src[_WORLD_WIDTH_][_WORLD_HEIGHT_],
+        struct point dect[_WORLD_WIDTH_][_WORLD_HEIGHT_])
+{
+    unsigned int i, j;
+    for (i = 0; i < _WORLD_WIDTH_; i++) {
+        for (j = 0; j < _WORLD_HEIGHT_; j++) {
+            dect[i][j] = src[i][j];
+        }
+    }
+}
+
 int main(int t, char const* n[])
 {
     struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
