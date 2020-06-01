@@ -83,9 +83,25 @@ void CoordinateNeighbours(signed int nb[][2], unsigned int x, unsigned int y)
     }
 }
 
+unsigned int getLiveCount(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
+{
+    int i, j, count = 0;
+    for (i = 1; i < _WORLD_WIDTH_; i++) {
+        for (j = 1; j < _WORLD_HEIGHT_; j++) {
+            if (world[i][j].Cell == 1) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
 int main(int t, char const* n[])
 {
     struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
     struct point prev_world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
     InitializeWorld(world);
+    int i;
+    int live_points = 0;
+    live_points = getLiveCount(world);
 }
