@@ -47,7 +47,7 @@ void PrintWorld(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
         printf("\n");
         for (j = 1; j < _WORLD_HEIGHT_; j++) {
             if (world[i][j].Cell == 1) {
-                printf(" * ");
+                printf(" @ ");
             } else {
                 printf(" ");
             }
@@ -66,6 +66,21 @@ void CopyWorld(
             dect[i][j] = src[i][j];
         }
     }
+}
+
+int CompareWorlds(
+        struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_],
+        struct point prev_world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
+{
+    unsigned int i, j;
+    for (i = 0; i < _WORLD_WIDTH_; i++) {
+        for (j = 0; j < _WORLD_HEIGHT_; j++) {
+            if (world[i][j].Cell != prev_world[i][j].Cell) {
+                return -1;
+            }
+        }
+    }
+    return 1;
 }
 
 void CoordinateNeighbours(signed int nb[][2], unsigned int x, unsigned int y)
@@ -96,6 +111,32 @@ unsigned int getLiveCount(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
     return count;
 }
 
+unsigned int CountAliveNeighbours(
+        struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_],
+        unsigned int x,
+        unsigned int y)
+{
+    unsigned int count = 0;
+    unsigned int i;
+    signed int nb[8][2];
+    signed int _x, _y;
+    CoordinateNeighbours(nb, x, y);
+    for (i = 0; i < 8; i++) {
+        _x = nb[i][0];
+        _y = nb[i][1];
+        if (_x < 0 || _y < 0) {
+            continue;
+        }
+        if (_x >= _WORLD_WIDTH_ || _y >= _WORLD_HEIGHT_) {
+            continue;
+        }
+        if (world[_x][_y].Cell == 1) {
+            count++;
+        }
+    }
+    return count;
+}
+
 int main(int t, char const* n[])
 {
     struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
@@ -103,5 +144,8 @@ int main(int t, char const* n[])
     InitializeWorld(world);
     int i;
     int live_points = 0;
-    live_points = getLiveCount(world);
+    do {
+        PrintWorld(world);
+        CopyWorld(world, prev_world);
+    } while (live_points != 0);
 }
