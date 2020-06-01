@@ -40,6 +40,22 @@ void InitializeWorld(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
     }
 }
 
+void PrintWorld(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
+{
+    int i, j = 0;
+    for (i = 1; i < _WORLD_WIDTH_; i++) {
+        printf("\n");
+        for (j = 1; j < _WORLD_HEIGHT_; j++) {
+            if (world[i][j].Cell == 1) {
+                printf(" * ");
+            } else {
+                printf(" ");
+            }
+        }
+    }
+    printf("\n---------------------------------------------\n");
+}
+
 int main(int t, char const* n[])
 {
     struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
