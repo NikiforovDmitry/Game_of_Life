@@ -103,5 +103,9 @@ int main(int t, char const* n[])
     InitializeWorld(world);
     int i;
     int live_points = 0;
-    live_points = getLiveCount(world);
+    do {
+        PrintWorld(world);
+        CopyWorld(world, prev_world);
+
+    } while (live_points != 0);
 }
