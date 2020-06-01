@@ -96,6 +96,32 @@ unsigned int getLiveCount(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
     return count;
 }
 
+unsigned int CountAliveNeighbours(
+        struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_],
+        unsigned int x,
+        unsigned int y)
+{
+    unsigned int count = 0;
+    unsigned int i;
+    signed int nb[8][2];
+    signed int _x, _y;
+    CoordinateNeighbours(nb, x, y);
+    for (i = 0; i < 8; i++) {
+        _x = nb[i][0];
+        _y = nb[i][1];
+        if (_x < 0 || _y < 0) {
+            continue;
+        }
+        if (_x >= _WORLD_WIDTH_ || _y >= _WORLD_HEIGHT_) {
+            continue;
+        }
+        if (world[_x][_y].Cell == 1) {
+            count++;
+        }
+    }
+    return count;
+}
+
 int main(int t, char const* n[])
 {
     struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
@@ -106,6 +132,5 @@ int main(int t, char const* n[])
     do {
         PrintWorld(world);
         CopyWorld(world, prev_world);
-
     } while (live_points != 0);
 }
