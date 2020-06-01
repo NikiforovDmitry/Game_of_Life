@@ -56,9 +56,52 @@ void PrintWorld(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
     printf("\n---------------------------------------------\n");
 }
 
+void CopyWorld(
+        struct point src[_WORLD_WIDTH_][_WORLD_HEIGHT_],
+        struct point dect[_WORLD_WIDTH_][_WORLD_HEIGHT_])
+{
+    unsigned int i, j;
+    for (i = 0; i < _WORLD_WIDTH_; i++) {
+        for (j = 0; j < _WORLD_HEIGHT_; j++) {
+            dect[i][j] = src[i][j];
+        }
+    }
+}
+
+void CoordinateNeighbours(signed int nb[][2], unsigned int x, unsigned int y)
+{
+    unsigned int i, j, k = 0;
+    for (i = x - 1; i <= x + 1; i++) {
+        for (j = y - 1; j <= y + 1; j++) {
+            if (i == x && j == y) {
+                continue;
+            }
+            nb[k][0] = i;
+            nb[k][1] = j;
+            k++;
+        }
+    }
+}
+
+unsigned int getLiveCount(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
+{
+    int i, j, count = 0;
+    for (i = 1; i < _WORLD_WIDTH_; i++) {
+        for (j = 1; j < _WORLD_HEIGHT_; j++) {
+            if (world[i][j].Cell == 1) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
 int main(int t, char const* n[])
 {
     struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
     struct point prev_world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
     InitializeWorld(world);
+    int i;
+    int live_points = 0;
+    live_points = getLiveCount(world);
 }
