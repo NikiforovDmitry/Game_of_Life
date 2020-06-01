@@ -47,7 +47,7 @@ void PrintWorld(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
         printf("\n");
         for (j = 1; j < _WORLD_HEIGHT_; j++) {
             if (world[i][j].Cell == 1) {
-                printf(" * ");
+                printf(" @ ");
             } else {
                 printf(" ");
             }
@@ -66,6 +66,21 @@ void CopyWorld(
             dect[i][j] = src[i][j];
         }
     }
+}
+
+int CompareWorlds(
+        struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_],
+        struct point prev_world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
+{
+    unsigned int i, j;
+    for (i = 0; i < _WORLD_WIDTH_; i++) {
+        for (j = 0; j < _WORLD_HEIGHT_; j++) {
+            if (world[i][j].Cell != prev_world[i][j].Cell) {
+                return -1;
+            }
+        }
+    }
+    return 1;
 }
 
 void CoordinateNeighbours(signed int nb[][2], unsigned int x, unsigned int y)
