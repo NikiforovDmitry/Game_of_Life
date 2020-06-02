@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 #define _WORLD_WIDTH_ 20
 #define _WORLD_HEIGHT_ 20
@@ -137,15 +138,66 @@ unsigned int CountAliveNeighbours(
     return count;
 }
 
+void NextGen(
+        struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_],
+        struct point prev_world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
+{
+    unsigned int i, j;
+    unsigned int live_nb;
+    struct point p;
+    for (i = 0; i < _WORLD_WIDTH_; i++) {
+        for (j = 0; j < _WORLD_HEIGHT_; j++) {
+            p = prev_world[i][j];
+            live_nb = CountAliveNeighbours(prev_world, i, j);
+            if (p.Cell == 0) {
+                if (live_nb == 3) {
+                    world[i][j].Cell = 1;
+                }
+            } else {
+                if (live_nb < 2 || live_nb > 3) {
+                    world[i][j].Cell = 0;
+                }
+            }
+        }
+    }
+}
+
 int main(int t, char const* n[])
 {
     struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
     struct point prev_world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
     InitializeWorld(world);
-    int i;
-    int live_points = 0;
+    int live_points = -1, opt, count = 0, i, CycledCount = 0;
     do {
         PrintWorld(world);
         CopyWorld(world, prev_world);
-    } while (live_points != 0);
+        CopyWorld(world, worlds[CycledCount].w);
+        NextGen(world, prev_world);
+        opt = CompareWorlds(world, prev_world);
+        for (i = 0; i < CycledCount; i++) {
+            if (CompareWorlds(world, worlds[i].w) == 1) {
+                opt = 1;
+                printf("Цикличность\n");
+                break;
+            }
+        }
+        live_points = getLiveCount(world);
+        printf("Живые клетки - %d\n", live_points);
+        if (live_points == 0) {
+            printf("Живых клеток не осталось\n");
+        }
+        if (CycledCount < _SIZE_) {
+            CycledCount++;
+        } else {
+            CycledCount = 0;
+        }
+        count++;
+        sleep(1);
+    } while (opt < 0 && live_points != 0);
+    if (opt == 1) {
+        printf("Достигнуты устойчивые позиции клеток\nКоличество дней %d\n",
+               count);
+    }
+
+    return 0;
 }
