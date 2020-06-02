@@ -137,6 +137,30 @@ unsigned int CountAliveNeighbours(
     return count;
 }
 
+void NextGen(
+        struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_],
+        struct point prev_world[_WORLD_WIDTH_][_WORLD_HEIGHT_])
+{
+    unsigned int i, j;
+    unsigned int live_nb;
+    struct point p;
+    for (i = 0; i < _WORLD_WIDTH_; i++) {
+        for (j = 0; j < _WORLD_HEIGHT_; j++) {
+            p = prev_world[i][j];
+            live_nb = CountAliveNeighbours(prev_world, i, j);
+            if (p.Cell == 0) {
+                if (live_nb == 3) {
+                    world[i][j].Cell = 1;
+                }
+            } else {
+                if (live_nb < 2 || live_nb > 3) {
+                    world[i][j].Cell = 0;
+                }
+            }
+        }
+    }
+}
+
 int main(int t, char const* n[])
 {
     struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
