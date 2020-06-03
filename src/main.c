@@ -8,7 +8,6 @@
 #define _WORLD_HEIGHT_ 20
 #define _SIZE_ 10
 
-
 int main()
 {
     struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_];
