@@ -1,4 +1,5 @@
 #include "curs_library.h"
+#include "curs_neighbours.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
