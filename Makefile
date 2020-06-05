@@ -1,4 +1,4 @@
-.PHONY: clean all run_Game_of_Life run_testing
+.PHONY: clean all run_game run_testing
 FLAGS := -std=c99
 FLAG := -std=c11
 SRC_DIR := ./src
@@ -35,7 +35,7 @@ clean:
 	rm $(OBJ_TEST_DIR)/*.o	
 	rm $(BIN_DIR)/testing
 
-run_Game_of_Life:
+run_game:
 	$(BIN_DIR)/Game_of_Life
 
 run_testing:
