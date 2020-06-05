@@ -16,8 +16,4 @@ void InitializeWorld(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_]);
 void PrintWorld(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_]);
 void CopyWorld(struct point src[_WORLD_WIDTH_][_WORLD_HEIGHT_],struct point dect[_WORLD_WIDTH_][_WORLD_HEIGHT_]);
 int CompareWorlds(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_],struct point prev_world[_WORLD_WIDTH_][_WORLD_HEIGHT_]);
-void CoordinateNeighbours(signed int nb[][2], unsigned int x, unsigned int y);
-unsigned int getLiveCount(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_]);
-unsigned int CountAliveNeighbours(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_],unsigned int x,unsigned int y);
-void NextGen(struct point world[_WORLD_WIDTH_][_WORLD_HEIGHT_],struct point prev_world[_WORLD_WIDTH_][_WORLD_HEIGHT_]);
 #endif
